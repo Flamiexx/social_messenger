@@ -7,10 +7,24 @@
 </head>
 <body>
     <h2>Register</h2>
-    <form method="POST">
+    <form method="POST" action="{{ url_for('main.register') }}">
         {{ form.hidden_tag() }}
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="text" name="username" value="{{ form.username.data }}" placeholder="Username" required><br>
+        {% if form.username.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.username.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <input type="email" name="email" value="{{ form.email.data }}" placeholder="Email" required><br>
+        {% if form.email.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.email.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
         <input type="password" name="password" placeholder="Password" required><br>
         <input type="password" name="confirm_password" placeholder="Confirm Password" required><br>
         <button type="submit">Register</button>
