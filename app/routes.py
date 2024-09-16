@@ -8,11 +8,15 @@ from app.forms import RegistrationForm
 main = Blueprint('main', __name__)
 
 
+@main.route('/')
+def home():
+    return redirect(url_for('main.register'))
+
+
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # Проверка, если такие username или email уже есть
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             flash('This username is already taken. Please choose a different one.', 'danger')
